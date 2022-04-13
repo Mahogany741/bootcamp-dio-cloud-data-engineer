@@ -1,0 +1,43 @@
+Nevegação
+
+LISTAR
+
+    dir 
+
+PASTA ESPECÍFICA
+
+    cd /
+
+    cd Windows
+
+    dir 
+
+VOLTAR UM CAMINHO NA ÁRVORE
+
+    cd ..
+
+LIMPAR TERMINAL 
+
+    cls
+
+AUTO COMPLETAR 
+
+    "cd W + Tab" resulta em cd Windows 
+
+CRIAR PASTA 
+
+    mkdir "name"
+
+    mkdir workspace 
+
+CRIANDO UM ARQUIVO COM BASE NO OUTPUT DO ECHO
+
+    echo hello > hello.txt
+
+DELETANDO ARQUIVOS DENTRO DO REPOSITORIO 
+
+    del workspace
+
+DELETAR REPOSITORIO E ARQUIVOS INTERNOS
+
+    rmdir workspace /S / Q

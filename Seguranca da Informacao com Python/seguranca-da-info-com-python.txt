@@ -1,0 +1,291 @@
+# O QUE É PING? 
+
+    # ICMP: INTERNET CONTROL MESSAGE PROTOCOL 
+
+    import os #Importa o modulo/biblioteca que integra os programas/recuros do S.O
+
+    ip_ou_host = input('Digite o IP ou Host a ser verificado: ')
+
+    os.system('ping -n 6 {} ' .format(ip_ou_host)) #Chamando system da biblioteca os - comando ping -n -num de pacotes que serão 6 {}
+
+    # ------------------------------------------
+
+    # PING MULTIPLO
+
+    import os
+    import time
+
+    with open('hosts.txt') as file:
+        dump = file.read()
+        dump = dump.splitlines()
+
+        for ip in dump:
+            os.system('ping -n 2 {}' .format(ip))
+            time.sleep(5)
+
+# BIBLIOTECA SOCKET 
+
+    # DESENVOLVIMENTO DE UM CLIENTE TCP
+
+    import socket #faz relacionamento da placa de rede com o S.O
+    import sys #fornece o acesso a algumas funcoes com o interpretador(python)
+
+    def main():
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+        except socket.error as e:
+            print('A conexão falhou!!!')
+            print('Erro: {}' .format(e))
+            sys.exit()
+        print('Socket criado com sucesso')
+
+        HostAlvo = input('Digite o Host ou Ip a ser conectado: ')
+        PortalAlvo = input('Digite a porta ser conectada: ')
+
+        try:
+            s.connect((HostAlvo, int(PortalAlvo)))
+            print('Cliente TCP conectado com Sucesso no Host: ' + HostAlvo + ' e na Porta: ' + PortalAlvo)
+            s.shutdown(2)
+        except socket.error as e:
+            print('Não foi possível conectar no Host: ' + HostAlvo + ' e na Porta: ' + PortalAlvo)
+            print('Erro: {}' .format(e))
+            sys.exit()
+    if __name__ == '__main__':
+        main()
+
+    # DESENVOLVIMENTO DE UM CLIENTE E SERVER UDP
+
+    import socket
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    print('Cliente Socket Criado com sucesso !')
+    
+    host = 'localhost'
+    porta = 5433
+    mensagem = 'Olá servidor, firmeza?'
+
+    try:
+        print('Cliente: ' + mensagem)
+        s.sendto(mensagem.encode(), (host, 5432))
+
+        dados, servidor = s.recvfrom(4096)
+        dados = dados.decode()
+        print('Cliente: ' + dados)
+
+    finally:
+        print('Cliente: Fechando a Conexão')
+        s.close()
+
+#SERVIDOR UDP
+
+    import socket 
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    print('Socket Criado com Sucesso')
+
+    host = 'localhost'
+    port = 5432
+
+    s.bind((host, port))
+    mensagem = 'Servido: Olá Cliente, eae blz?'
+
+    while 1:
+        dados, end = s.recvfrom(4096)
+        if dados:
+            print('Servidor enviando mensagem...')
+            s.sendto(dados + (mensagem.encode()), end)
+
+# GERADOR DE SENHAS 
+
+    import random
+    import string
+
+    tamanho = 16
+
+    chars = string.ascii_letters + string.digits + 'ç!@#$%&*'
+
+    rnd = random.SystemRandom()
+
+    print(''.join(rnd.choice(chars) for i in range(tamanho)))
+
+# COMPARADOR DE HASHES
+
+    import hashlib
+
+    arquivo1 = 'a.txt'
+    arquivo2 = 'b.txt'
+
+    hash1 = hashlib.new('ripemd160')
+
+    hash1.update(open(arquivo1, 'rb').read())
+
+    hash2 = hashlib.new('ripemd160')
+
+    hash2.update(open(arquivo2, 'rb').read())
+
+    if hash1.digest() != hash2.digest():
+        print(f'O arquivo: {arquivo1} é diferente do arquivo: {arquivo2}')
+        print('O hash do arquivo a.txt é: ', hash1.hexdigest())
+        print('O hash do arquivo b.txt é: ', hash2.hexdigest())
+
+    else: 
+        print(f'O arquivo: {arquivo1} é igual ao arquivo: {arquivo2}')
+        print('O hash do arquivo a.txt é: ', hash1.hexdigest())
+        print('O hash do arquivo b.txt é: ', hash2.hexdigest())
+
+# THREADS
+
+    from threading import Thread
+    import time
+
+    def carro(velocidade, piloto):
+        trajeto = 0
+        
+        while trajeto <= 100:
+            trajeto += velocidade
+            time.sleep(0.5)
+            print('Piloto: {} KM: {} \n' .format(piloto, trajeto))
+
+
+    t_carro1 =Thread(target=carro, args=[1, 'Bruno'])
+    t_carro2 =Thread(target=carro, args=[2, 'Python'])
+
+    t_carro1.start()
+    t_carro2.start()
+
+# IP'S
+
+    import ipaddress #Biblioteca para manipulação de ip (verificacao, calculos etc)
+
+    ip = '192.168.0.0/24'
+
+    rede = ipaddress.ip_network(ip, strict=False)
+
+    #Verificando todos os ip's de uma rede
+    for ip in rede:
+        print(ip) 
+
+# GERADOR DE HASHES  
+
+    import hashlib
+
+    string = input('Digite o texto a ser gerado a hash: ')
+
+    menu = int(input('''#### MENU - ESCOLHA O TIPO DE HASH #### \n
+    1) MD5
+    2) SHA1
+    3) SHA256
+    4) SHA512 \n
+    Digite o número do hash a ser gerado:  '''))
+
+    if menu == 1:
+        resultado = hashlib.md5(string.encode('utf-8'))
+        print('A hash md5 da string: , ', string, 'é: ', resultado.hexdigest())
+    elif menu == 2:
+        resultado = hashlib.sha1(string.encode('utf-8'))
+        print('A hash SHA1 da string: , ', string, 'é: ', resultado.hexdigest())
+    elif menu == 3:
+        resultado = hashlib.sha256(string.encode('utf-8'))
+        print('A hash SHA256 da string: , ', string, 'é: ', resultado.hexdigest())
+    elif menu == 4:
+        resultado = hashlib.sha512(string.encode('utf-8'))
+        print('A hash SHA512 da string: , ', string, 'é: ', resultado.hexdigest())
+    else:
+        print('Entrada inválida')
+
+
+# GERADOR DE WORDLISTS
+
+    import itertools #usaremos para gerar uma lista com caracteres diferentes e sem repeticao de palavras
+
+    string = input('String a ser permutada: ')
+
+    resultado = itertools.permutations(string, len(string))
+
+    for i in resultado:
+        print(''.join(i))
+
+# Web Scraping  / #Serve para coletar dados da web
+
+    from bs4 import BeautifulSoup #extração de dados em HTML/XML
+
+    import requests #permite enviar solicitações HTTP em Python
+
+    site = requests.get('https://www.tempo.com/sao-paulo.htm').content #recebendo todo o conteudo da requisição http do site ....
+
+    soup = BeautifulSoup(site, 'html.parser') #baixando do site o html
+
+    #print(soup.prettify()) #prettify, transforma o html em string, para ser exibido no print
+
+    temperatura = soup.find('span', class_="maxima changeUnitT", data="27.83|0|")
+
+    print(temperatura.string)
+
+# VERIFICADOR DE TELEFONE
+
+    import phonenumbers
+
+    from phonenumbers import geocoder
+
+    phone = input('Digite o telefone no formato +551140028922: ')
+
+    phone_number = phonenumbers.parse(phone)
+
+    print(geocoder.description_for_number(phone_number, 'pt'))
+
+# OCULTADOR DE ARQUIVOS 
+
+    import ctypes
+
+    atributo_ocultar = 0x02
+
+    retorno = ctypes.windll.kernel32.SetFileAttributesW('ocultar.txt', atributo_ocultar)
+
+    if retorno:
+        print('Aruivo foi ocultado')
+    else:
+        print('Arquivo não foi ocultado')
+
+# VERIFICADOR DE IP EXTERNO
+
+    import re  # Permite operações com expressões regulares
+
+    import json # Operação de codificação e decodificação JSON
+
+    from urllib.request import urlopen
+
+    url = 'https://ipinfo.io/json'
+
+    resposta = urlopen(url)
+
+    dados = json.load(resposta)
+
+    ip = dados['ip']
+    org = dados['org']
+    cid = dados['city']
+    pais = dados['country']
+    regiao = dados['region']
+
+    print('Detalhes do IP externo\n')
+    print('IP: {4}\nRegião:  {1}\nPaís: {2}\nCidade: {3}\nOrg:  {0}\n'.format(org, regiao, pais, cid, ip))
+
+#FERRAMENTA GRAFICA
+
+import webbrowser #fornece interface de alto nível de documentos WEB 
+
+from tkinter import * #interface padrão do python para o kit de ferramentas gráficas Tk
+
+root = Tk( )
+
+root.title('Abrir o Browser')
+root.geometry('300x200')
+
+def google():
+    webbrowser.open('www.google.com')
+
+mygoogle = Button(root, text='Abrir o Google', command=google).pack(pady=20)
+root.mainloop()
+
+

@@ -1,0 +1,21 @@
+BLOBS (bolhas)
+
+    echo 'conteudo' | git hash-object --stdin
+
+    echo -e 'blob 9\0conteudo' | openssl sha1
+
+
+TREE (arvores)
+
+    Arvore também tem meta dados, ela aponta para um arquivo, tem um SHA1 e guarda o nome desse arquivo (diferente do blob).
+
+COMMITS 
+
+    Commit, aponta para uma arvore, parente, autor, mensagem.
+
+    Possui o  timestamp (data e hora).
+    Possui SHA1.
+
+
+É por isso que GIT é um sistema distribuido SEGURO 
+

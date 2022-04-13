@@ -1,0 +1,28 @@
+GIT INIT 
+
+    Iniciar
+
+GIT ADD 
+
+    mover arquivos
+
+GIT COMMIT 
+
+    comentário
+
+
+mkdir livro-receitas
+
+CONFIGURANDO O REPOSITORIO 
+
+    git init
+
+    git config --global user.email "jonathan741.js@gmail.com"
+
+    git config --global user.name Mahogany
+
+ADICIONANDO UM ARQUIVO (MARKDOWN)
+
+    git add * 
+
+    git commit -m "commit inicial"

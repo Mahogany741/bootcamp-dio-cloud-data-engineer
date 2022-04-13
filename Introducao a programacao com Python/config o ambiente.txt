@@ -1,0 +1,20 @@
+Abrir Power Shell ou terminal Python
+
+iniciar o Python 
+
+    python
+
+Mostrando na tela
+
+    print('Meu primeiro programa')
+
+    print("Meu primeiro programa")
+
+Declarando / Inicializando variaveis (no python, vc pode iniciar uma variavel, já atribuindo valores a ela, o proprio python fará a tipagem)
+
+    a = 2 
+    b = 3
+
+    soma = a + b 
+
+    print(soma)

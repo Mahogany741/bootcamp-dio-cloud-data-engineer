@@ -1,0 +1,22 @@
+GIT STATUS 
+
+    Mostra o status do arquivo
+
+    Criando pasta 
+    
+        mkdir receitas
+
+    Movendo arquivo 
+
+        mv  strogonoff.md ./receitas/
+
+    Movendo os arquivos para a area staged e fazendo o commit 
+
+
+        git add receitas/
+        git add strogonoff.md
+
+
+        git commit -m "cria pasta receita, move arquivo para receitas"
+
+        echo > README.md

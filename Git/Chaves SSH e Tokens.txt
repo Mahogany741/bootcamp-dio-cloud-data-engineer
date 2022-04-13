@@ -1,0 +1,8 @@
+CHAVE SSH 
+
+    Conexão segura e encriptada entre duas máquinas.
+        Com duas chaves (pública e privada)
+
+TOKEN DE ACESSO PESSOAL 
+
+    

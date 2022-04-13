@@ -1,0 +1,548 @@
+from fcntl import F_UNLCK
+from tkinter.ttk import _TreeviewColumnDict
+
+
+VARIAVEIS 
+
+    #Para descobrir qual o tipo de uma variavel 
+        
+        print(type(soma))
+
+    #Convertendo um int para string 
+
+        soma = str(soma)
+
+    #FORMAT - Faz a concatenacao independente do tipo
+
+        print('soma: {}' .format(soma))
+
+    #CODE 
+    
+    a = int(input('Entre com o primeiro valor: '))
+    b = int(input('Entre com o segundo valor: '))
+
+    soma = a + b 
+    subtracao = a - b
+    multiplicacao = a * b
+    divisao = a / b
+    resto = a % b
+
+    a = str(a)
+    b = str(b)
+
+    print('soma: {}. \nsubtracao: {}. \nmutiplicacao: {}. \ndivisao: {}. \nresto: {}.' .format(soma, subtracao, multiplicacao, divisao, resto))
+
+    # soma = str(soma)
+    # subtracao = str(subtracao)
+    # multiplicacao = str(multiplicacao)
+    # divisao = str(divisao)
+    # resto = str(resto)
+
+    # print('Valor: '+ a)
+    # print('Valor: '+ b)
+    # print('Soma: ' + soma)
+    # print('Subtracao: ' + subtracao)
+    # print('Multiplicacao: ' + multiplicacao)
+    # print('Divisao: ' + divisao)
+    # print('Resto: ' + resto)
+
+
+# INTERAÇÃO COM USUÁRIO
+
+
+    a = int(input('Entre com o primeiro valor: '))
+    b = int(input('Entre com o segundo valor: '))
+
+
+# AULA 3 - Como criar um código em Python que funcione de acordo com a relação das variáveis
+
+    # DESCOBRINDO O MAIOR VALOR
+    
+    a = int(input('Primeiro valor: '))
+    b = int(input('Segundo valor: '))
+    c = int(input('Terceiro valor: '))
+
+    if a > b and a > c:
+        print('O maior número é {}' .format(a))
+    elif b > a and b > c:
+        print('O maior número é: {}' .format(b))
+    else:
+        print('O maior número é: {}' .format(c))
+    print('Fim do programa')
+
+    # VERIFICAR SE O NÚMERO É PAR 
+
+    a = int(input('Entre com um valor: '))
+    resto = a % 2
+
+    if resto == 0:
+        print('Número é par')
+    else:
+        print('Número é impar')
+
+    # VERIFICAR SE UM DOS NÚMEROS DIGITADOS É PAR
+
+    a = int(input('Entre com o primeiro valor: '))
+    b = int(input("Entre com o segundo valor: "))
+
+    resto_a = a % 2
+    resto_b = b % 2
+
+    if resto_a == 0 or resto_b == 0:
+        print('Foi digitado um número par')
+    else:
+        print('Nenhum número par foi digitado')
+
+    # MÉDIA NOTA, VERIFICANDO SE A NOTA DIGITADA É MENOR QUE 10
+
+    a = int(input('Entre com a nota do primeiro bimestre: '))
+        if a > 10:
+            a = int(input('Você digitou errado. Digite novamente: '))
+
+    b = int(input('Entre com a nota do segundo bimestre: '))
+        if b > 10:
+            b = int(input('Você digitou errado. Digite novamente: '))
+
+    c = int(input('Entre com a nota do terceiro bimestre: '))
+        if c > 10:
+            c = int(input('Você digitou errado. Digite novamente: '))
+
+    d = int(input('Entre com a nota do quarto bimestre: '))
+        if d > 10:
+            d = int(input('Você digitou errado. Digite novamente: '))
+
+    media = (a + b + c + d) / 4
+
+    print('media: {}'.format(media))
+
+    # AULA 4 -  LAÇOS DE REPETIÇÃO = FOR / WHILE 
+
+
+        for x in range(1, 100):
+        print(x)
+
+        # DESCOBRINDO SE UM NÚMERO É PRIMO 
+
+        a = int(input('Entre com um número: '))
+
+        for x in range(1, a+1):
+            resto = a % x
+            print(resto)
+
+        # WHILE 
+
+        #Corrigindo o sistema de média
+
+        nota = int(input('Entre com a nota: '))
+        while nota > 10:
+            nota = int(input('Nota inválida. Digite novamente: '))
+        print('Nota inserida com sucesso: {}' .format(nota))
+
+    # LISTAS 
+
+        lista = [1, 3, 5, 7]
+        lista_animal = ['cachorro', 'gato', 'elefante']
+
+        print(lista)
+        # print(type(lista))
+
+        #A lista permite acessar posições específicas. Lembrando que a contagem inicia-se em 0
+
+        print(lista_animal[1])
+
+        #Percorrendo uma lista 
+        
+        lista = [1, 3, 5, 7]
+        lista_animal = ['cachorro', 'gato', 'elefante']
+
+        for x in lista_animal:
+            print(x)
+
+
+        #somando todos os itens da lista / manualmente
+
+        lista = [1, 3, 5, 7]
+
+        soma = 0
+        for x in lista:
+            soma += x
+        print(soma)
+
+        #somando todos os itens da lista / método 
+
+        lista = [1, 3, 5, 7]
+
+        print(sum(lista))
+
+        #buscando o maior valor da lista / método (VALE PARA STRINGS, porém, para definir a ordem alfabetica)
+
+        lista = [1, 3, 5, 7]
+
+        print(max(lista))
+
+        #buscando o menor valor da lista / método (VALE PARA STRINGS, porém, para definir a ordem alfabetica)
+
+        lista = [1, 3, 5, 7]
+
+        print(min(lista))
+
+        #verificando se o item já existe na lista 
+
+        lista_animal = ['cachorro', 'gato', 'elefante']
+
+        if 'gato' in lista_animal: 
+            print('existe um gato na lista')
+        else:
+            print('não existe um gato na lista')
+
+        #Incluindo novos valores/itens na lista (no exemplo abaixo, caso ele nao exista)
+
+        lista_animal = ['cachorro', 'gato', 'elefante']
+
+        novo_item = input("Digite um item a ser inserido: ")
+
+        if novo_item in lista_animal:
+            print('{} já existe' .format(novo_item))
+        else:
+            print('{} não existe e será inserido na lista' .format(novo_item))
+            lista_animal.append(novo_item)
+            print('Lista atualizada\n', lista_animal)
+
+        #Removendo itens pela posição 
+
+        lista_animal = ['cachorro', 'gato', 'elefante']
+
+        lista_animal.pop(1) #removera o item da posicao 1 (gato)
+
+        print(lista_animal)
+        lista_animal.pop() #como nao foi declarada a posicao, removera o último item
+
+        #Removendo itens pelo nome
+
+        lista_animal = ['cachorro', 'gato', 'elefante']
+
+        lista_animal.remove('elefante')
+
+        print(lista_animal)
+
+        #Ordenando uma lista
+
+        lista = [12, 10, 7, 5]
+        lista_animal = ['cachorro', 'gato', 'elefante', 'lobo', 'arara']
+
+        lista.sort()
+        lista_animal.sort()
+
+        print(lista)
+        print(lista_animal)
+        #é possivel ordenar de forma reversa
+        lista_animal.reverse()
+        print(lista_animal)
+
+    # TUPLAS 
+        # A principalmente diferença em relação a lista, é que a tupla é imutável
+
+        tupla = (1, 10, 12, 14)
+
+        print(tupla)
+
+        # Como descobrir quantos elementos, tem na tupla 
+
+        tupla = (1, 10, 12, 14)
+
+        print(len(tupla))
+
+        # Convertendo uma lista, para uma tupla
+
+        lista_animal = ['cachorro', 'gato', 'elefante', 'lobo', 'arara']
+
+        tupla_animal = tuple(lista_animal)
+
+        print(type(tupla_animal))
+        print(tupla_animal)
+
+        # Convertendo tupla em lista 
+
+        tupla = (1, 10, 12, 14)
+
+        lista_numerica = list(tupla)
+
+        print(type(lista_numerica))
+        print(lista_numerica)
+
+    # CONJUNTOS 
+
+        conjunto = {1, 2, 3, 4}
+        print(conjunto) 
+        # Uma das caracteristicas do conjunto, é que ele não apresenta duplicidade.
+
+        #Adicionando elementos ao conjunto
+        
+        conjunto = {1, 2, 3, 4}
+
+        conjunto.add(5)
+
+        print(conjunto)
+
+        #removendo elementos ao conjunto
+        
+        conjunto = {1, 2, 3, 4}
+
+        conjunto.discard(2)
+
+        print(conjunto)
+
+        # União
+
+        conjunto = {1, 2, 3, 4, 5}
+        conjunto2 = {5, 6, 7, 8}
+
+        conjunto_uniao = conjunto.union(conjunto2)
+
+        print(conjunto_uniao)
+
+        # Intersecção (Evento que ocorre nos 2 conjuntos)
+
+        conjunto = {1, 2, 3, 4, 5}
+        conjunto2 = {5, 6, 7, 8}
+
+        conjunto_interseccao = conjunto.intersection(conjunto2)
+
+        print(conjunto_interseccao)
+
+        # Diferença 
+
+        conjunto = {1, 2, 3, 4, 5}
+        conjunto2 = {5, 6, 7, 8}
+
+        #Trazendo o que o 'conjunto' tem de diferente em relacao ao 'conjunto2'
+        conjunto_diferenca = conjunto.difference(conjunto2)
+
+        print(conjunto_diferenca)
+
+        #Trazendo o que o 'conjunto2' tem de diferente em relacao ao 'conjunto'
+        conjunto_diferenca = conjunto2.difference(conjunto)
+
+        print(conjunto_diferenca)
+
+        # Diferença Simétrica
+
+        conjunto = {1, 2, 3, 4, 5}
+        conjunto2 = {5, 6, 7, 8}
+
+        #O resultado obtido, são os itens diferentes dos 2 conjuntos, ou seja, apenas o 5 não será exibido.
+        conjunto_dif_simetrica = conjunto.symmetric_difference(conjunto2)
+
+        print(conjunto_dif_simetrica)
+
+        # Pertinencia 
+
+        conjunto_a = {1, 2, 3}
+        conjunto_b = {1, 2, 3, 4, 5}
+
+        #subset
+        #Essa query, basicamente, está perguntando, se o conjunto A, é um "sub"/parte do conjunto B. Nesse caso, sim. Porém B não é subset de A
+        conjunto_subset = conjunto_a.issubset(conjunto_b)
+        print(conjunto_subset)
+
+        #superset
+        #Essa query, basicamente, está perguntando, se o conjunto B, é um "super"/'todo' do conjunto A. Nesse caso, sim. Porém A não é superset de B
+
+        #dica: Se A é sub de B, logo, B é super de A, pois, B tem todos os elementos de A e mais alguns outros.
+        conjunto_superset = conjunto_b.issuperset(conjunto_a)
+        print(conjunto_superset)
+
+        # COMO CONVERTER UMA LISTA EM COJUNTOS (AFIM DE TIRAR A DUPLICIDADE DELA)
+
+        lista = ['cachorro', 'cachorro', 'gato', 'gato', 'elefante']
+        conjunto_animais = set(lista)
+
+        print(lista)
+        print(conjunto_animais)
+
+        #desfazendo a conversao (a lista trará o resultado sem a duplicidade)
+        lista_animais = set(conjunto_animais)
+        print(lista_animais)
+
+
+    # AULA 7 - METODOS(def), FUNCOES E CLASSES 
+
+        #metodo: nao retorna valor
+        #funcao: retorna valor
+
+        #Nesse caso é uma funcao, pois retorna valor
+        def soma(a, b):
+            return a + b
+
+        print(soma(1, 2))
+
+        def subtracao(a, b):
+            return a - b
+        print(subtracao(10, 2))
+
+        def multiplicacao(a, b):
+            return a * b
+        print(multiplicacao(3, 2))
+        
+        def divisao(a, b):
+            return a / b
+        print(divisao(10, 2))
+
+        #CLASS 
+        # No exemplo abaixo, o beneficio obtido, é não ter a necessidade de informar os valores a cada operação.
+
+
+        class Calculadora:
+            # Init serve para quando instanciarmos o objeto, ele já iniciar com valores
+            def __init__(self, num1, num2):
+                self.valor_a = num1
+                self.valor_b = num2
+
+            def soma(self):
+                return self.valor_a + self.valor_b
+            
+            def sub(self):
+                return self.valor_a - self.valor_b
+
+            def mult(self):
+                return self.valor_a * self.valor_b
+            
+            def div(self):
+                return self.valor_a / self.valor_b
+
+        calculadora = Calculadora(10, 2)
+        print(calculadora.soma())
+        print(calculadora.sub())
+        print(calculadora.mult())
+        print(calculadora.div())
+
+        #Exemplo sem iniciar os valores 
+
+        class Calculadora:
+
+            def soma(self, valor_a, valor_b):
+                return valor_a + valor_b
+            
+            def sub(self, valor_a, valor_b):
+                return valor_a - valor_b
+
+            def mult(self, valor_a, valor_b):
+                return valor_a * valor_b
+            
+            def div(self, valor_a, valor_b):
+                return valor_a / valor_b
+
+        calculadora = Calculadora()
+        print(calculadora.soma(10, 2))
+        print(calculadora.sub(10, 2))
+        print(calculadora.mult(10, 2))
+        print(calculadora.div(10, 2))
+
+        #Exemplo Televisao 
+        class Televisao:
+            
+            def __init__(self):
+                self.ligada = False
+                self.canal = 5
+        
+            def power(self):
+                #Nesse caso, estou verificando se a tv esta ligada, como é uma variavel boolean, eu nao preciso perguntar se self.ligada == true, isso é automatico
+                if self.ligada:
+                    self.ligada = False 
+                else:
+                    self.ligada = True
+
+            def aumenta_canal(self):
+                if self.ligada:
+                    self.canal += 1
+
+            def diminui_canal(self):
+                if self.ligada:
+                    self.canal -= 1
+
+
+
+        televisao = Televisao()
+        print('TV ligada? {}'.format(televisao.ligada))
+        televisao.power()
+        print('TV ligada? {}'.format(televisao.ligada))
+
+        televisao.aumenta_canal()
+        televisao.aumenta_canal()
+        print('Canal Atual: {}' .format(televisao.canal))
+
+        televisao.diminui_canal()
+        print('Canal Atual: {}' .format(televisao.canal))
+
+        # AULA 8 - MÓDULOS / FUNÇÕES ANÔNIMAS (LAMBDA)
+
+        # modulo é cada arquivo .py, é possivel acessar esses arquivos(modulos), pelo console.
+
+        import aula7
+
+        # Esse comando, deve ser usado dentro do arquivo origem(aula7), quando queremos que o trecho de código abaixo, só seja executado, se for solicitado pelo arquivo origem.
+        # if __name__ == '__main__':
+
+
+        #Acessando diretamente uma classe de outro módulo(arquivo)
+
+        from aula7 import Televisao
+
+        televisao = Televisao()
+
+        televisao.ligada
+
+        televisao.power()
+
+        # É possível fazer isso dentro de outro arquivo (Módulo 8)
+
+        from aula7 import Televisao
+
+        televisao = Televisao()
+
+        print(televisao.ligada)
+
+        televisao.power()
+
+        print(televisao.ligada)
+
+        # AULA 9 - MANIPULANDO ARQUIVOS
+
+        open('text.txt', 'w')
+
+        arquivo = open('text.txt', 'w')
+
+        arquivo.write('Minha primeira escrita')
+
+        arquivo.close()
+
+        #Se tentarmos, executar o comando novamente, ele sobrescreverá, o texto anterior. Para que isso não ocorra, devemos usar o 'a'.
+
+        arquivo = open('text.txt', 'a')
+
+        arquivo.write('\nSegunda primeira escrita')
+
+        arquivo.close()
+
+        #Colocando isso dentro de um metodo
+
+        def escrever_arquivo(texto):
+            arquivo = open('text.txt', 'w')
+            arquivo.write('Primeira linha.\n')
+            arquivo.close()
+
+        def atualizar_arquivo(nome_arquivo, texto):
+            arquivo = open('nome_arquivo', 'a')
+            arquivo.write(texto)
+            arquivo.close()
+
+        def ler_arquivo(nome_arquivo):
+            arquivo = open(nome_arquivo, 'r')
+            texto = arquivo.read()
+            print(texto)
+
+        if __name__ == ('__main__'):
+            # escrever_arquivo('Primeira linha.\n')
+            aluno = 'Rafael, 10, 10, 5, 5'
+            atualizar_arquivo('notas.txt', aluno)
+            # ler_arquivo('text.txt')

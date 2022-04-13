@@ -1,0 +1,15 @@
+Mostrar todas as configurações 
+
+    git config --list 
+
+Zerando os dados 
+
+    git config --global --unset user.email
+
+    git config --global --unset user.name
+
+Alterando os dados 
+
+    git config --global user.email
+
+    git config --global user.name
