@@ -180,3 +180,217 @@ df.drop_duplicates()
 
 #ETAPA DE TRANSFORMAÇÃO
 
+#importando as bibliotecas
+import pandas as pd
+import pandera as pa
+
+#fazendo a leitura e limpeza parcial simultaneamente
+valores_ausentes = ['**', '###!', '####', '****', '*****', 'NULL']
+df = pd.read_csv("ocorrencia.csv", sep=";", parse_dates=['ocorrencia_dia'], dayfirst=True, na_values=valores_ausentes)
+df.head(10)
+
+#gerando o esquema
+schema = pa.DataFrameSchema(
+    columns = {
+        'codigo_ocorrencia':pa.Column(pa.Int),
+        'codigo_ocorrencia2':pa.Column(pa.Int),
+        'ocorrencia_classificacao':pa.Column(pa.String),
+        'ocorrencia_uf':pa.Column(pa.String, pa.Check.str_length(2,2), nullable=True),
+        'ocorrencia_cidade':pa.Column(pa.String),
+        'ocorrencia_aerodromo':pa.Column(pa.String, nullable=True),
+        'ocorrencia_dia':pa.Column(pa.DateTime),
+        'ocorrencia_hora':pa.Column(pa.String, pa.Check.str_matches(r'^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$'), nullable=True), #Declarando que podem existir campos nulos.
+        'total_recomendacoes':pa.Column(pa.Int)
+    }
+)
+
+#validando o esquema
+schema.validate(df)
+
+#verificando o tipo de dados
+df.dtypes
+
+#buscando dados da segunda linha
+df.loc[1]
+
+#buscando pelo indice 
+df.iloc[-1] #(ultima linha)
+
+#buscando uma range com indice
+df.iloc[10:15] #esse resultado trará apenas até o 14, diferentemente do df.loc que se baseia no label.
+
+#buscando dados de uma coluna
+df.loc[:,'ocorrencia_uf'] 
+#or
+df['ocorrencia_uf']
+
+#valores nulos
+df.isna().sum()
+#or
+df.isnull().sum()
+
+#buscando linhas com valores nulos
+df.ocorrencia_uf.isnull() #metodo booleano: trará todas as linhas da coluna, informando false/true
+
+#trazendo somente, a linha que tem o valor nulo
+df.loc[df.ocorrencia_uf.isnull()]
+
+#facilitando o filtro
+filtro = df.ocorrencia_uf.isnull()
+df.loc[filtro]
+
+#função count
+df.count() #não conta valores nulos
+
+#filtros: ocorrencias com mais de 10 recomendacoes
+filtro = df.total_recomendacoes > 10
+df.loc[filtro]
+
+#filtros: trazendo uma coluna específica, com ocorrencias com mais de 10 recomendacoes
+filtro = df.total_recomendacoes > 10
+df.loc[filtro, 'ocorrencia_cidade']
+
+#filtros: trazendo mais de uma coluna, com ocorrencias com mais de 10 recomendacoes
+filtro = df.total_recomendacoes > 10
+df.loc[filtro, ['ocorrencia_cidade', 'total_recomendacoes']]
+
+#filtros: ocorrencia classificada como INCIDENTE GRAVE
+filtro = df.ocorrencia_classificacao == 'INCIDENTE GRAVE'
+df.loc[filtro]
+
+#filtros: classificacao == 'INCIDENTE GRAVE' E UF == 'SP'
+filtro1 = df.ocorrencia_classificacao == 'INCIDENTE GRAVE'
+filtro2 = df.ocorrencia_uf == 'SP'
+df.loc[filtro1 & filtro2] #operador logico AND
+
+#filtros: classificacao == 'INCIDENTE GRAVE' OU UF == 'SP'
+filtro1 = df.ocorrencia_classificacao == 'INCIDENTE GRAVE'
+filtro2 = df.ocorrencia_uf == 'SP'
+df.loc[filtro1 | filtro2] #operador logico OR
+
+#filtros: classificacao == 'INCIDENTE GRAVE' OU 'INCIDENTE' E UF == 'SP'
+filtro1 = (df.ocorrencia_classificacao == 'INCIDENTE GRAVE') | (df.ocorrencia_classificacao == 'INCIDENTE')
+filtro2 = df.ocorrencia_uf == 'SP'
+df.loc[filtro1 & filtro2]
+
+#filtros: facilitando com o metodo isin() que verifica possibilidades dentro de uma coluna
+filtro1 = df.ocorrencia_classificacao.isin(['INCIDENTE GRAVE', 'INCIDENTE'])
+filtro2 = df.ocorrencia_uf == 'SP'
+df.loc[filtro1 & filtro2]
+
+#filtro parcial: Trazer todas as cidades que comecem com a letra C
+# obs: str[0] serve para buscar a primeira letra de uma string (atraves do indice)
+filtro = df.ocorrencia_cidade.str[0] == 'C'
+df.loc[filtro]
+
+#filtro parcial: Trazer todas as cidades que termine com a letra A
+# obs: str[-1] serve para buscar a primeira letra de uma string (atraves do indice)
+filtro = df.ocorrencia_cidade.str[-1] == 'A'
+df.loc[filtro]
+
+#filtro parcial: Trazer todas as cidades que termine com as letras NA
+filtro = df.ocorrencia_cidade.str[-2:] == 'NA'
+df.loc[filtro]
+
+#filtro parcial: Trazer todas as cidades que contem as letras MA
+filtro = df.ocorrencia_cidade.str.contains('MA')
+df.loc[filtro]
+
+#filtro parcial com operador logico OR: Trazer todas as cidades que contem as letras MA OU AL
+filtro = df.ocorrencia_cidade.str.contains('MA|AL')
+df.loc[filtro]
+
+#filtro parcial: ocorrencia do ano de 2015
+filtro = df.ocorrencia_dia.dt.year == 2015
+df.loc[filtro]
+
+#filtro parcial: ocorrencia do ano de 2015 e mes 12
+#forma 1
+filtro1 = df.ocorrencia_dia.dt.year == 2015
+filtro2 = df.ocorrencia_dia.dt.month == 12
+df.loc[filtro1 & filtro2]
+
+#filtro parcial: ocorrencia do ano de 2015 e mes 12
+#forma 2
+filtro = (df.ocorrencia_dia.dt.year == 2015) & (df.ocorrencia_dia.dt.month == 12)
+df.loc[filtro]
+
+#filtro parcial: ocorrencia do ano de 2015 e mes 12 e dia 8
+filtro_ano = df.ocorrencia_dia.dt.year == 2015
+filtro_mes = df.ocorrencia_dia.dt.month == 12
+filtro_dia = df.ocorrencia_dia.dt.day == 8
+df.loc[filtro_ano & filtro_mes & filtro_dia]
+
+#filtro parcial: ocorrencia do ano de 2015 e mes 12 e do dia 3 ao 8
+filtro_ano = df.ocorrencia_dia.dt.year == 2015
+filtro_mes = df.ocorrencia_dia.dt.month == 12
+filtro_dia = (df.ocorrencia_dia.dt.day >=3) & (df.ocorrencia_dia.dt.day <=8)
+df.loc[filtro_ano & filtro_mes & filtro_dia]
+
+
+#filtro parcial: 
+# Necessidade: filtrar dia e hora, numa mesma coluna
+
+#passo1: concatenar as colunas ocorrencia_dia e ocorrencia_hora em uma só 
+#passo2: como as colunas eram de tipos diferentes, foi necessário realizar a conversão, antes da concatenacao
+#passo3: astype(str) foi utilizado para converter em str
+#passo4: pd.to_datetime foi utilizado para converter no formato de data e hora
+df['ocorrencia_dia_hora'] = pd.to_datetime(df.ocorrencia_dia.astype(str) + ' ' + df.ocorrencia_hora)
+
+#filtro parcial: ocorrencia do ano de 2015 e mes 12 e do dia 3 as 11:00 ao dia 8 13:00
+filtro1 = df.ocorrencia_dia_hora >= '2015-12-03 11:00:00'
+filtro2 = df.ocorrencia_dia_hora <= '2015-12-08 13:00:00'
+df.loc[filtro1 & filtro2]
+
+
+# AGRUPAMENTO DE DADOS 
+#dica: nunca contar, por uma coluna que tem valores nulos
+
+#ocorrencias do ano de 2015 e mes 03
+filtro1 = df.ocorrencia_dia.dt.year == 2015
+filtro2 = df.ocorrencia_dia.dt.month == 3
+df201503 = df.loc[filtro1 & filtro2]
+df201503
+
+df201503.count()
+
+df201503.groupby(['ocorrencia_classificacao']).codigo_ocorrencia.count()
+
+df201503.groupby(['ocorrencia_classificacao']).ocorrencia_aerodromo.count()
+
+#size() serve para agrupar e contar os registros
+df201503.groupby(['ocorrencia_classificacao']).size()
+
+#ordernando em ordem crescente
+df201503.groupby(['ocorrencia_classificacao']).size().sort_values()
+
+#ordernando em ordem decrescente
+df201503.groupby(['ocorrencia_classificacao']).size().sort_values(ascending=False)
+
+#agrupando dados da regiao sudeste de 2012
+filtro1 = df.ocorrencia_dia.dt.year == 2012
+filtro2 = df.ocorrencia_uf.isin(['SP', 'MG', 'ES', 'RJ'])
+dfsudeste2012 = df.loc[filtro1 & filtro2]
+dfsudeste2012
+
+#agrupando e contando os acidentes
+filtro1 = df.ocorrencia_dia.dt.year == 2012
+filtro2 = df.ocorrencia_uf.isin(['SP', 'MG', 'ES', 'RJ'])
+dfsudeste2012 = df.loc[filtro1 & filtro2]
+dfsudeste2012.groupby(['ocorrencia_classificacao']).size()
+
+#agrupando e contando os acidentes, por cada UF
+filtro1 = df.ocorrencia_dia.dt.year == 2012
+filtro2 = df.ocorrencia_uf.isin(['SP', 'MG', 'ES', 'RJ'])
+dfsudeste2012 = df.loc[filtro1 & filtro2]
+dfsudeste2012.groupby(['ocorrencia_classificacao', 'ocorrencia_uf']).size()
+
+#agrupando e contando por cidades
+dfsudeste2012.groupby(['ocorrencia_cidade']).size().sort_values(ascending=False)
+
+#dados do Rio de Janeiro + total de recomendacoes
+filtro = dfsudeste2012.ocorrencia_cidade == 'RIO DE JANEIRO'
+dfsudeste2012.loc[filtro].total_recomendacoes.sum()
+
+#dados do Rio de Janeiro + total de recomendacoes
+dfsudeste2012.loc[filtro].total_recomendacoes.sum()
