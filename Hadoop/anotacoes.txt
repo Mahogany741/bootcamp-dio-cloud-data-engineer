@@ -1,0 +1,96 @@
+Processamento tradiocional:
+
+    Escalabilidade vertical(Mainframe)
+
+Processamento distribuído:
+
+    Escalabilidade horizontal
+    obs: é possível escalar elasticamente(Nuvem)
+
+CLUSTER 
+
+O que é um cluster?
+
+    É um grupo de computadores que trabalham juntos.
+    Provê armazenamento, processamento e gerenciamento de recursos.
+
+O que é um nó?
+
+    Computador individual no cluster.
+
+O que é um daemon?
+
+    É um programa(serviço) rodando em um nó.
+
+HADOOP
+
+O que é Hadoop 
+
+    Framework para computação distribuída, com filesystem distribuído(HDFS)
+
+Benefícios/Características:
+
+    - Escalável, confiável, processamento distribuído
+    - S.O de Big Data
+    - Pode utilizar hardware comum(commodity cluster computing)
+    - Capaz de lidar com falhas (hardware, software, rede).
+
+Distros 
+
+    Open Source
+
+        - Apache Hadoop
+
+    Commercial Open Source
+
+        - Cloudera(+Hortonworks)
+        - MapR
+        - AWS ElasticMapReduce
+        - Microsoft HDInsight
+
+Core Hadoop
+
+    Processing
+
+        - Spark
+        - MapReduce
+
+    Resource Management 
+
+        - YARN 
+
+    Storage 
+
+        - HDFS
+
+
+HDFS (Hadoop Distributed File System)
+
+Cada arquivo é "divido' em até 3 blocos de no máximo 128mb/cada bloco e cada bloco é replicado em 3 nós diferentes.
+
+
+NameNode
+    Gerencia o namespace
+    Se o Namenode para, o cluster fica inacessível
+
+DataNode
+    Amazena os blocos de arquivos
+
+Secondary NameNode
+    Oferece tarefas de ponto de verificação e manutenção do NameNode
+
+
+PUT / GET 
+
+- Copiar arquivo HDFS para local
+    $ hdfs dfs -get /tmp/file_teste.txt
+
+- Ingestão manual
+    % hdfs dfs -put file_teste.txt /user/everis-bigdata/
+
+YARN (Yet Another Resource Negotiator)
+
+- Gerenciamento de recursos;
+- Gerenciamento e monitoramento de Jobs;
+- Recursos dos nós são alocados somente quando requisitado (Via container)
+
